@@ -1,0 +1,433 @@
+openapi: 3.0.0
+info:
+  title: Chat04 Database
+  description: This is the Database API for comunication with the backend. The Chat04 API was developed by Group 04 of the 2023 WI-113 Networks Course as part of their exam.
+  version: 1.0.0
+paths:
+  /user/create:
+    post:
+      operationId: access_db.post_user_create
+      summary: Add a new user to db
+      description: Add a new user to the users db with a given username and password.
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: UserA
+                password:
+                  type: string
+                  example: 33c5ebbb01d608c254b3b12413bdb03e46c12797e591770ccf20f5e2819929b2
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: string
+                example: New user Created.
+        '409':
+          description: Conflict 
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Username is already in use.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /user/delete/{username}:
+    delete:
+      operationId: access_db.delete_user_delete
+      summary: Delete a user from the db
+      description: Delete the user associated wih the given username from the db
+      tags:
+        - user
+      parameters:
+        - name: username
+          in: path
+          description: Username
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: User deleted.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /user/exists/{username}:
+    get:
+      operationId: access_db.get_user_exists
+      summary: Check if a user exists
+      description: Check if the given username exists in the db
+      tags:
+        - user
+      parameters:
+        - name: username
+          in: path
+          description: Username
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: True
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /user/password:
+    post:
+      operationId: access_db.post_user_password
+      summary: Check if password is correct
+      description: Check if the provided password matches the provided username
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: UserA
+                password:
+                  type: string
+                  example: 33c5ebbb01d608c254b3b12413bdb03e46c12797e591770ccf20f5e2819929b2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: True
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Username not found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /session/create:
+    post:
+      operationId: access_db.post_session_create
+      summary: Add a new session to db
+      description: Add a new session to the sessions db with a given sessionId and username. existing sessions for the given username will be overwritten
+      tags:
+        - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sid:
+                  type: string
+                  example: fa1ac18f-eb3b-11ed-a217-3887d50b3d5c
+                username:
+                  type: string
+                  example: UserA
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: string
+                example: New session created.
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: string
+                example: SessionId already in use.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /session/delete/{username}:
+    delete:
+      operationId: access_db.delete_session_delete
+      summary: Delete a session from the db
+      description: Delete the session associated wih the given username from the db
+      tags:
+        - session
+      parameters:
+        - name: username
+          in: path
+          description: username
+          required: true
+          schema:
+            type: string
+            example: UserA
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Session deleted.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /session/{sid}:
+    get:
+      operationId: access_db.get_session
+      summary: Get the username for session
+      description: Returns the username associated with the given SessionId
+      tags:
+        - session
+      parameters:
+        - name: sid
+          in: path
+          description: SessionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: UserA
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: SessionId not found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /messages/create:
+    post:
+      operationId: access_db.post_messages_create
+      summary: Create a new message
+      description: Add a new message to the messages db with a given sender, receiver, message and timestamp.
+      tags:
+        - messages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sender:
+                  type: string
+                  example: UserA
+                receiver:
+                  type: string
+                  example: UserB
+                message:
+                  type: string
+                  example: Hello UserB!
+                timestamp:
+                  type: string
+                  example: '2023-05-16 13:30:34'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: string
+                example: New message created.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Bad format of the timestamp.
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Receiver not found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /messages/delete:
+    post:
+      operationId: access_db.post_messages_delete
+      summary: Delete messages from the db
+      description: Delete the messages associated wih the given mids from the db. Used for deleting multiple messages at once.
+      tags:
+        - messages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Messages deleted.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /messages/{receiver}:
+    get:
+      operationId: access_db.get_messages_info
+      summary: Get info about buffered messages
+      description: Returns a list of all users that send messages to the specified receiver and the count of the messages. Only regards buffered (unretrieved) messages. Does not check if the specified receiver exists.
+      tags:
+        - messages
+      parameters:
+        - name: receiver
+          in: path
+          description: Receiver username
+          required: true
+          schema:
+            type: string
+            example: UserA
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sender:
+                      type: string
+                      example: UserB
+                    count:
+                      type: integer
+                      example: 3
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+  /messages/{receiver}/{sender}:
+    get:
+      operationId: access_db.get_messages
+      summary: Get all buffered messages from a sender
+      description: Returns a list of all buffered messages by a specified sender to a specified receiver. Does not check if the specified sender or receiver exists.
+      tags:
+        - messages
+      parameters:
+        - name: receiver
+          in: path
+          description: Receiver username
+          required: true
+          schema:
+            type: string
+            example: UserA
+        - name: sender
+          in: path
+          description: Sender username
+          required: true
+          schema:
+            type: string
+            example: UserB
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    mid:
+                      type: integer
+                      example: 1
+                    message:
+                      type: string
+                      example: Hello UserA!
+                    timestamp:
+                      type: string
+                      example: '2023-05-16 13:30:34'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Error Message
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      description: Header value used for authentification of the backend
+      in: header
+      name: apiKey
+      x-apikeyInfoFunc: security.verify_apikey
+security:
+  - ApiKeyAuth: []
