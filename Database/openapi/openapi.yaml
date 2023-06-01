@@ -6,7 +6,7 @@ info:
 paths:
   /user/create:
     post:
-      operationId: access_db.post_user_create
+      operationId: app.post_user_create
       summary: Add a new user to db
       description: Add a new user to the users db with a given username and password.
       tags:
@@ -47,7 +47,7 @@ paths:
                 example: Error Message
   /user/delete/{username}:
     delete:
-      operationId: access_db.delete_user_delete
+      operationId: app.delete_user_delete
       summary: Delete a user from the db
       description: Delete the user associated wih the given username from the db
       tags:
@@ -76,7 +76,7 @@ paths:
                 example: Error Message
   /user/exists/{username}:
     get:
-      operationId: access_db.get_user_exists
+      operationId: app.get_user_exists
       summary: Check if a user exists
       description: Check if the given username exists in the db
       tags:
@@ -105,7 +105,7 @@ paths:
                 example: Error Message
   /user/password:
     post:
-      operationId: access_db.post_user_password
+      operationId: app.post_user_password
       summary: Check if password is correct
       description: Check if the provided password matches the provided username
       tags:
@@ -146,7 +146,7 @@ paths:
                 example: Error Message
   /session/create:
     post:
-      operationId: access_db.post_session_create
+      operationId: app.post_session_create
       summary: Add a new session to db
       description: Add a new session to the sessions db with a given sessionId and username. existing sessions for the given username will be overwritten
       tags:
@@ -187,7 +187,7 @@ paths:
                 example: Error Message
   /session/delete/{username}:
     delete:
-      operationId: access_db.delete_session_delete
+      operationId: app.delete_session_delete
       summary: Delete a session from the db
       description: Delete the session associated wih the given username from the db
       tags:
@@ -217,7 +217,7 @@ paths:
                 example: Error Message
   /session/{sid}:
     get:
-      operationId: access_db.get_session
+      operationId: app.get_session
       summary: Get the username for session
       description: Returns the username associated with the given SessionId
       tags:
@@ -253,7 +253,7 @@ paths:
                 example: Error Message
   /messages/create:
     post:
-      operationId: access_db.post_messages_create
+      operationId: app.post_messages_create
       summary: Create a new message
       description: Add a new message to the messages db with a given sender, receiver, message and timestamp.
       tags:
@@ -307,7 +307,7 @@ paths:
                 example: Error Message
   /messages/delete:
     post:
-      operationId: access_db.post_messages_delete
+      operationId: app.post_messages_delete
       summary: Delete messages from the db
       description: Delete the messages associated wih the given mids from the db. Used for deleting multiple messages at once.
       tags:
@@ -337,7 +337,7 @@ paths:
                 example: Error Message
   /messages/{receiver}:
     get:
-      operationId: access_db.get_messages_info
+      operationId: app.get_messages_info
       summary: Get info about buffered messages
       description: Returns a list of all users that send messages to the specified receiver and the count of the messages. Only regards buffered (unretrieved) messages. Does not check if the specified receiver exists.
       tags:
@@ -375,7 +375,7 @@ paths:
                 example: Error Message
   /messages/{receiver}/{sender}:
     get:
-      operationId: access_db.get_messages
+      operationId: app.get_messages
       summary: Get all buffered messages from a sender
       description: Returns a list of all buffered messages by a specified sender to a specified receiver. Does not check if the specified sender or receiver exists.
       tags:
