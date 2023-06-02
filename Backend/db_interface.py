@@ -9,8 +9,8 @@ from exceptions import *
 
 HEADERS = {"apiKey": "1892",
            "Content-Type": "application/json"}
-IP = "14.0.8.4"
-BASE_URL = f"http://{IP}:8080"
+DATABASE_IP = "14.0.8.4"
+BASE_URL = f"http://{DATABASE_IP}:8080"
 
 ### Accounts
 
