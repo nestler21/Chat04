@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Chat04 Backend
-  description: This is the Backend API for comunication with the a API client. This API was developed by Group 04 of the 2023 WI-113 Networks Course as part of their exam.
+  description: This is the Backend API for comunication with an API client. This API was developed by Group 04 of the 2023 WI-113 Networks Course as part of their exam.
   version: 1.0.0
 paths:
   /register:
